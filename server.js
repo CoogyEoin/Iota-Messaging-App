@@ -18,10 +18,12 @@ app.post('/MAM', urlencodedParser, function(req, res){
 
 
 response = {
+    seed: req.body.seed,
     sidekey : req.body.sidekey,
     message: req.body.message
 };
 
+const seed = response.seed;
 const msg = response.message;
 const key = response.sidekey;
     
@@ -30,7 +32,7 @@ console.log(response);
 //convert the response in JSON format
 res.end(JSON.stringify(response));
     
-let mamState = Mam.init(iota)
+let mamState = Mam.init(iota, seed, 2)
 
 mamState = Mam.changeMode(mamState, 'restricted', key)
 // Publish to tangle
